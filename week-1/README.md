@@ -1,4 +1,4 @@
-# Week 1 – JavaScript Fundamentals
+# Week 1 – Lecture 1.2 (JavaScript Fundamentals)
 
 ## 📚 Topics Covered
 - Variables and basic syntax
