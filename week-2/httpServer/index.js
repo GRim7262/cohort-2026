@@ -40,6 +40,12 @@ app.post("/", (req, res) => {
 });
 
 app.put("/", (req, res) => {
+  if (users[0].kidneys.filter((kidney) => !kidney.healthy).length === 0) {
+    return res.status(411).json({
+      msg: "No unhealthy kidneys to update",
+    });
+  }
+
   for (let i = 0; i < users[0].kidneys.length; i++) {
     users[0].kidneys[i].healthy = true;
   }
@@ -52,7 +58,7 @@ app.put("/", (req, res) => {
 
 app.delete("/", (req, res) => {
   if (users[0].kidneys.filter((kidney) => !kidney.healthy).length === 0) {
-    return res.status(200).json({
+    return res.status(411).json({
       msg: "No unhealthy kidneys to delete",
     });
   }
