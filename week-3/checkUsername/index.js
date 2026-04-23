@@ -5,6 +5,11 @@ const app = express();
 app.use(express.json())
 
 const schema = z.array(z.number())
+const validateInput = z.object({
+    email: z.string().email(),
+    password: z.string().min(8),
+    country: z.literal("IN").or(z.literal("US"))
+})
 let numberOfRequest = 0;
 
 const calculateRequest = (req, res, next) => {
@@ -62,6 +67,19 @@ app.post("/", (req, res) => {
     res.status(200).json({
         msg: `Your kindey length is ${kidneyLength}`,
         response
+    })
+})
+
+app.post("/login", (req, res) => {
+    const inputs = req.body;
+    const response = validateInput.safeParse(inputs);
+    if (!response.success) {
+        return res.status(400).json({
+            msg: "Invalid Inputs"
+        })
+    }
+    res.status(200).json({
+        value: response.data
     })
 })
 
