@@ -3,7 +3,7 @@ const z = require("zod")
 const schema = z.array(z.number())
 
 const schema2 = z.object({
-    email: z.email(),
+    email: z.string().email(),
     password: z.string().min(8)
 })
 

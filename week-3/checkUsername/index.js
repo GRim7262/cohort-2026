@@ -4,7 +4,7 @@ const port = 3000;
 const app = express();
 app.use(express.json())
 
-const schema = z.array(z.number())
+const kidneySchema = z.array(z.number())
 const validateInput = z.object({
     email: z.string().email(),
     password: z.string().min(8),
@@ -54,7 +54,7 @@ app.get('/', (req, res) => {
 
 app.post("/", (req, res) => {
     const kidneys = req.body.kidneys;
-    const response = schema.safeParse(kidneys)
+    const response = kidneySchema.safeParse(kidneys)
 
     if (!response.success) {
         return res.status(400).json({

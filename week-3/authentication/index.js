@@ -1,83 +1,107 @@
+require("dotenv").config()
 const express = require("express")
 const jwt = require("jsonwebtoken")
-const jwtPassword = "123456"
+const mongoose = require("mongoose")
+const jwtPassword = process.env.JWT_PASSWORD
 const app = express()
-const port = 3000;
+const port = 3000
+
+const connectDB = async () => {
+    try {
+        await mongoose.connect(process.env.MONGO_URL)
+        console.log("MongoDB Connected");
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+connectDB();
+
+const User = mongoose.model('users', {
+    name: String,
+    username: String,
+    password: String
+})
 
 app.use(express.json())
 
-const ALL_USERS = [{
-    username: "harkirat@gmail.com",
-    password: "123",
-    name: "harkirat singh",
-},
-{
-    username: "raman@gmail.com",
-    password: "123321",
-    name: "Raman singh",
-},
-{
-    username: "priya@gmail.com",
-    password: "123321",
-    name: "Priya kumari",
-}
-]
 
-const userExists = (username, password) => {
-    // for (let i = 0; i < ALL_USERS.length; i++) {
-    //     if (
-    //         username === ALL_USERS[i].username &&
-    //         password === ALL_USERS[i].password
-    //     ) {
-    //         return true
-    //     }
-    // }
-    // return false
+app.post("/signup", async (req, res) => {
 
-    // return ALL_USERS.some(user => user.username === username && user.password === password)
-    return ALL_USERS.find(user => user.username === username && user.password === password)
-}
+    const { name, username, password } = req.body;
 
-// console.log(userExists("priya@gmail.com", "123321"))
+    try {
+        const existingUser = await User.findOne({ username: username })
 
-app.post("/signin", (req, res) => {
+        if (existingUser) {
+            return res.status(400).send("username already exists")
+        }
+
+        const user = new User({
+            name,
+            username,
+            password
+        })
+
+        await user.save()
+
+        res.json({
+            msg: "User created successfully"
+        })
+    } catch (err) {
+
+        res.status(500).json({
+            msg: "Something went wrong",
+            error: err.message
+        })
+    }
+})
+
+app.post("/signin", async (req, res) => {
     const { username, password } = req.body;
 
-    const user = userExists(username, password)
+    try {
+        const user = await User.findOne({
+            username: username,
+            password: password
+        })
 
-    if (!user) {
-        return res.status(403).json({
-            msg: "User doesnt exist in our in memory db"
+        if (!user) {
+            return res.status(403).json({
+                msg: "Invalid username or password"
+            })
+        }
+
+        const token = jwt.sign({ username: user.username }, jwtPassword, { expiresIn: "10m" })
+        res.json({
+            token,
+            username: user.username
+        })
+    } catch (err) {
+        res.status(500).json({
+            msg: "Something went wrong",
+            error: err.message
         })
     }
 
-    // if (!userExists(username, password)) {
-    //     return res.status(403).json({
-    //         msg: "User doesnt exist in our in memory db"
-    //     })
-    // }
 
-    const token = jwt.sign({ username: user.username }, jwtPassword, { expiresIn: "10m" })
-    res.json({
-        token,
-        username: user.username
-    })
 })
 
-app.get("/users", (req, res) => {
+app.get("/users", async (req, res) => {
     const token = req.headers.authorization;
     try {
         const decoded = jwt.verify(token, jwtPassword)
         const username = decoded.username;
 
-        const otherUsers = ALL_USERS.filter((user) => user.username !== username)
+        const otherUsers = await User.find({
+            username: { $ne: username }
+        })
         res.json({
             users: otherUsers
         })
     } catch (err) {
         return res.status(403).json({
-            msg: "Invalid token",
-            error: err
+            error: err.message
         });
     }
 })
