@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 2px 1px 2px #eee;
+  box-sizing: border-box;
+  padding-left: 178px;
+  padding-right: 178px;
+  padding-top: 7px;
+}
+
+.logo {
+  width: 129px;
+  padding: 9px;
+}
+
+.links {
+  display: flex;
+  gap: 25px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.links a {
+  text-decoration: none;
+  color: #666;
+  padding: 15px;
+}
+
+.hero {
+  padding-top: 65px;
+  margin-bottom: 60px;
+  display: flex;
+  justify-content: center;
+}
+
+.hero img {
+  width: 700px;
+}
+
+.hero-content {
+  display: flex;
+  justify-content: center;
+}
+
+.hero-content h1 {
+  font-size: 28px;
+  color: #424242;
+  font-weight: 450;
+  margin-bottom: 12px;
+}
+
+.paragraph {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: #666;
+  font-weight: 450;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.btn button {
+  background-color: #387ed1;
+  color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0) !important;
+  border-radius: 3px;
+  padding: 10px 30px;
+  font-weight: 500;
+  font-size: 18px;
+  cursor: pointer;
+}
