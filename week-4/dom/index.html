@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="input">
+        <input
+          type="text"
+          placeholder="First number"
+          class="firstPlaceholder"
+          id="firstNumber"
+        />
+        <input
+          type="text"
+          placeholder="Second number"
+          class="secondPlaceholder"
+          id="secondNumber"
+        />
+      </div>
+
+      <div class="btn-container">
+        <button class="btn" onclick="calculateSum()">Calculate Sum</button>
+      </div>
+
+      <div id="finalSum" class="finalSum"></div>
+    </div>
+  </body>
+</html>
