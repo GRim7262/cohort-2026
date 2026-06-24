@@ -1,3 +1,10 @@
+let timeout;
+
+const debounceSum = () => {
+    clearTimeout(timeout)
+    timeout = setTimeout(calculateSum, 1000)
+}
+
 const calculateSum = async () => {
     const firstNumber = Number(document.getElementById("firstNumber").value)
     const secondNumber = Number(document.getElementById("secondNumber").value)

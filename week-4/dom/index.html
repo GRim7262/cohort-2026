@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculator</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
   </head>
   <body>
     <div class="container">
@@ -15,18 +15,20 @@
           placeholder="First number"
           class="firstPlaceholder"
           id="firstNumber"
+          oninput="debounceSum()"
         />
         <input
           type="text"
           placeholder="Second number"
           class="secondPlaceholder"
           id="secondNumber"
+          oninput="debounceSum()"
         />
       </div>
 
-      <div class="btn-container">
+      <!-- <div class="btn-container">
         <button class="btn" onclick="calculateSum()">Calculate Sum</button>
-      </div>
+      </div> -->
 
       <div id="finalSum" class="finalSum"></div>
     </div>
