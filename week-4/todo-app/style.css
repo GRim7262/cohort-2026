@@ -17,7 +17,7 @@ body {
 }
 
 .todo-container {
-  background-color: red;
+  background-color: oklch(55.8% 0.288 302.321);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -34,6 +34,7 @@ body {
 .description {
   text-align: center;
   height: 30px;
+  border-radius: 5px;
 }
 
 .btn-container {
@@ -48,6 +49,7 @@ body {
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
+  border-radius: 5px;
 }
 
 .btn:hover {
@@ -61,4 +63,12 @@ body {
 
 .displayTodo {
   margin-top: 20px;
+}
+
+.todo-item {
+  border: 1px solid #ccc;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  background-color: oklch(71.4% 0.203 305.504);
 }
